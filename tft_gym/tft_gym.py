@@ -32,7 +32,7 @@ class TFTBoardEnv(gym.Env):
         self._gold = 0
 
         observation = self._get_obs()
-        return observation        
+        return observation, None     
     
     def step(self, action):
         terminated = False
