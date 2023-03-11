@@ -12,7 +12,7 @@ for i in range (1000):
     output += " "
     output += output[-2]
     output += " "
-    output += str(random.randrange(3, 5))
+    output += str(random.randrange(3, 6))
     print(output)
 
 
@@ -27,7 +27,7 @@ for i in range (1000):
 #     output += " "
 #     output += output[-2]
 #     output += " "
-#     output += str(random.randrange(4, 7))
+#     output += str(random.randrange(4, 8))
 #     print(output)
 
 # # Stage 4 simulation
@@ -41,5 +41,5 @@ for i in range (1000):
 #     output += " "
 #     output += output[-2]
 #     output += " "
-#     output += str(random.randrange(7, 8))
+#     output += str(random.randrange(7, 9))
 #     print(output)
