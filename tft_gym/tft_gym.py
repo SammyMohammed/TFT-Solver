@@ -48,9 +48,9 @@ class TFTBoardEnv(gym.Env):
         if action == 0:
             if np.random.random() < .33: # we can change this for final version, assuming 1 guy in lobby high rolled
                self._hp -= 5
-            gold_spent -= 10
+            gold_spent += 10
         if action == 1:
-            gold_spent -= 20
+            gold_spent += 20
         if action == 2:
             self._gold += 10
             self._hp -= 10
