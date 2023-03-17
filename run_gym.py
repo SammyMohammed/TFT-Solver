@@ -49,24 +49,36 @@ def QLearning(file, nstates, nactions, discount, lr, output, iterations):
     policy.tofile(output + '.policy', sep="\n")
     print(output)
 
+def calc_state_num(obs):
+    # we encode our state by just multiplying, a bit scuffed ngl  
+    out = 1
+    for k in obs.keys():
+        if k == "num_states":
+            continue
+        out *= obs[k]
+    return out
+
+
 for _ in range(1000):
     # 4 actions, 100 hp
-    qlm = QLearningModel([0 for i in range(101)], [0 for i in range(4)], .9, .001)
+    qlm = QLearningModel([0 for i in range(env.observation_space["n_states"].n)], [0 for i in range(4)], .9, .001)
     action = env.action_space.sample()  # agent policy that uses the observation and info
     observation, reward, terminated, truncated, info = env.step(action)
-    old_obs = observation
+    old_obs = calc_state_num(observation)
     iterations = 100
     for i in range(iterations):
-        s = observation["hp"]
-        s1 = old_obs["hp"]
-        action = np.argmax(qlm.Q[s,:] + np.random.randn(1,4)*(1./(i+1)))
+        s = calc_state_num(observation)
+        s1 = old_obs
+        action = np.argmax(qlm.Q[calc_state_num(observation),:] + np.random.randn(1,4)*(1./(i+1)))
         observation, reward, terminated, truncated, info = env.step(action)
         qlm.Q[s, action] += qlm.lr * (reward + qlm.discount*np.max(qlm.Q[s1, :]) - qlm.Q[s,action])
-        old_obs = observation
+        old_obs = calc_state_num(observation)
         print(reward)
         if terminated or truncated:
             policy = greedy_policy(qlm)
-            print("Final policy:", policy)
+            print("Final policy for iter :", i, policy)
             observation, info = env.reset()
+    policy = greedy_policy(qlm)
+    print("Final policy:", policy)
 
 env.close()

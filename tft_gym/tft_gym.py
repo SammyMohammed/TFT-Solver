@@ -21,6 +21,7 @@ class TFTBoardEnv(gym.Env):
                 "level": spaces.Discrete(9),
                 "your_units": spaces.Discrete(10),
                 "enemy_units": spaces.Discrete(10),
+                "n_states": spaces.Discrete(100 * 200 * 9 * 10 * 10),
             }
         )
 
